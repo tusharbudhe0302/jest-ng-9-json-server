@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BannerComponent } from './banner/banner.component';
 import { routes } from './app.router'
+import { AppService } from './app.service';
+import { MembersService } from './shared/services/members.service';
 
 
 // Notice how both FormsModule and ReactiveFormsModule imported...choices, choices!
@@ -24,7 +26,7 @@ import { routes } from './app.router'
   exports: [
     CommonModule
   ],
-  providers: [],
+  providers: [AppService,MembersService],
   bootstrap: [AppComponent, BannerComponent]
 })
 export class AppModule { }

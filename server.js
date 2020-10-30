@@ -6,12 +6,20 @@ const hsts = require('hsts');
 const path = require('path');
 const xssFilter = require('x-xss-protection');
 const nosniff = require('dont-sniff-mimetype');
-const request = require('request');
+const jsonServer = require('json-server');
+const morgan = require('morgan');
+const fs = require('fs');
+const db = JSON.parse(fs.readFileSync('./db.json'));
 
-const port = process.env.PORT || 9000;
+
+const port = process.env.PORT || 3000;
 
 const app = express();
-
+// app.use(
+//     express.static(path.join(__dirname, 'dist/f1-track'), {
+//         etag: false
+//     })
+// );
 app.use(cors());
 app.use(express.static('assets'));
 app.use(bodyParser.json());
@@ -20,83 +28,19 @@ app.disable('x-powered-by');
 app.use(xssFilter());
 app.use(nosniff());
 app.set('etag', false);
-app.use(
-    helmet({
-        noCache: false
-    })
-);
-app.use(
-    hsts({
-        maxAge: 15552000 // 180 days in seconds
-    })
-);
-
-// app.use(
-//     express.static(path.join(__dirname, 'dist/f1-track'), {
-//         etag: false
-//     })
-// );
-
-app.get('/api/members', (req, res) => {
-    request('http://localhost:3000/members', (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
+// To setup policy
+app.use(helmet({noCache: false}));
+// 180 days in seconds
+app.use(hsts({maxAge: 15552000 }));
+app.use((req, res, next) => {
+    // Middleware logic for JWT verification
+    next();
 });
+app.set('enableLogger', true);
+app.use(morgan('combined'));
+app.use('/api', jsonServer.defaults(), jsonServer.router(db));
 
-app.get('/api/members/:id', (req, res) => {
-    request('http://localhost:3000/members/:id', (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
-});
-
-app.get('/api/teams', (req, res) => {
-    request('http://localhost:3000/teams', (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
-});
-
-// Submit Form!
-app.post('/api/members', (req, res) => {
-    request.post({
-        url: 'http://localhost:3000/members',
-        body: req.bodyParser.json(),
-        json: true
-    }, (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
-});
-app.put('/api/members/:id', (req, res) => {
-    request.put({
-        url: 'http://localhost:3000/members/:id',
-        body: req.bodyParser.json(),
-        json: true
-    }, (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
-});
-app.delete('/api/members/:id', (req, res) => {
-    request.delete({
-        url: 'http://localhost:3000/members/:id',
-        body: req.bodyParser.json(),
-        json: true
-    }, (err, response, body) => {
-        if (response.statusCode <= 500) {
-            res.send(body);
-        }
-    });
-});
-
-// app.get('*', (req, res) => {
+// app.get("*", (res) => {
 //     res.sendFile(path.join(__dirname, 'dist/f1-track/index.html'));
 // });
 

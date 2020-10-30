@@ -1,11 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, TestBed, ComponentFixtureAutoDetect, inject } from '@angular/core/testing';
 import { MembersComponent } from './members.component';
+import { MembersService } from '../shared/services/members.service';
 
+class MockMembersService {
+  getMember = []
+}
 describe('MembersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MembersComponent], 
+      declarations: [MembersComponent],
+      providers: [
+        { provide: MembersService, useValue:true },
+        { provide: ComponentFixtureAutoDetect, useValue: true }
+      ],
     }).compileComponents();
   }));
 
@@ -14,10 +21,9 @@ describe('MembersComponent', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
-
   it(`should have as title 'Member List'`, () => {
     const fixture = TestBed.createComponent(MembersComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Member List');
+    expect(app.memberTitle).toEqual('Member List');
   });
 });
