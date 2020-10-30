@@ -17,7 +17,6 @@ describe('AppService', () => {
   it('should get users', async(inject([HttpTestingController, AppService],
     (httpMock: HttpTestingController, apiService: AppService) => {
       expect(apiService).toBeTruthy();
-      expect(apiService.logger('Hello')).toBeTruthy();
     }
   )));
 
