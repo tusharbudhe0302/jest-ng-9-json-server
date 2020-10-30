@@ -2,6 +2,7 @@ import { TestBed, async, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { AppService } from './app.service';
+import { HttpClient } from '@angular/common/http';
 
 describe('AppService', () => {
   beforeEach(() => {
@@ -19,6 +20,4 @@ describe('AppService', () => {
       expect(apiService).toBeTruthy();
     }
   )));
-
-  
 });

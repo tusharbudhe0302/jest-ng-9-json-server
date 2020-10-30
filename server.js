@@ -15,11 +15,7 @@ const db = JSON.parse(fs.readFileSync('./db.json'));
 const port = process.env.PORT || 3000;
 
 const app = express();
-// app.use(
-//     express.static(path.join(__dirname, 'dist/f1-track'), {
-//         etag: false
-//     })
-// );
+app.use(express.static(path.join(__dirname, 'dist/f1-track'), { etag: false }));
 app.use(cors());
 app.use(express.static('assets'));
 app.use(bodyParser.json());
@@ -29,9 +25,9 @@ app.use(xssFilter());
 app.use(nosniff());
 app.set('etag', false);
 // To setup policy
-app.use(helmet({noCache: false}));
+app.use(helmet({ noCache: false }));
 // 180 days in seconds
-app.use(hsts({maxAge: 15552000 }));
+app.use(hsts({ maxAge: 15552000 }));
 app.use((req, res, next) => {
     // Middleware logic for JWT verification
     next();
@@ -40,10 +36,10 @@ app.set('enableLogger', true);
 app.use(morgan('combined'));
 app.use('/api', jsonServer.defaults(), jsonServer.router(db));
 
-// app.get("*", (res) => {
-//     res.sendFile(path.join(__dirname, 'dist/f1-track/index.html'));
-// });
+app.get("*", (res) => {
+    res.sendFile(path.join(__dirname, 'dist/f1-track/index.html'));
+});
 
 app.listen(port, () => {
-    console.log('Vrrrum Vrrrum! Server starting!');
+    console.log(`Vrrrum Vrrrum! Server ${port} starting!`);
 });
