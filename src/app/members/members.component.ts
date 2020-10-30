@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Member } from '../shared/model/member';
 import { MembersService } from '../shared/services/members.service';
 
 
@@ -10,11 +12,16 @@ import { MembersService } from '../shared/services/members.service';
 })
 export class MembersComponent implements OnInit {
   memberTitle = "Member List";
-
-  constructor(private membersService:MembersService) {
+  members$: Observable<Member[]>;
+  member: Member;
+  allMembers: any;
+  membersTest: Member[] = [];
+  constructor(private membersService: MembersService) {
   }
   ngOnInit() {
-    this.membersService.findAllMembers().subscribe((members) => console.log(members));
+    this.membersService.findAllMembers().subscribe((membersTest: Member[]) => {
+      this.membersTest = membersTest;
+    });
   }
 
 }

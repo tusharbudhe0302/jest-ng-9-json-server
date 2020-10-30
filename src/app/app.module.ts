@@ -9,13 +9,15 @@ import { BannerComponent } from './banner/banner.component';
 import { routes } from './app.router'
 import { AppService } from './app.service';
 import { MembersService } from './shared/services/members.service';
+import { MembersComponent } from './members/members.component';
 
 
 // Notice how both FormsModule and ReactiveFormsModule imported...choices, choices!
 @NgModule({
   declarations: [
     AppComponent,
-    BannerComponent
+    BannerComponent,
+    MembersComponent
   ],
   imports: [
     CommonModule,
@@ -23,10 +25,8 @@ import { MembersService } from './shared/services/members.service';
     HttpClientModule,
     RouterModule.forRoot(routes, { useHash: true, enableTracing: false, onSameUrlNavigation: 'reload' }),
   ],
-  exports: [
-    CommonModule
-  ],
-  providers: [AppService,MembersService],
+  exports: [],
+  providers: [AppService, MembersService],
   bootstrap: [AppComponent, BannerComponent]
 })
 export class AppModule { }

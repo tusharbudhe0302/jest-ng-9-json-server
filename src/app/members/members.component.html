@@ -1,3 +1,34 @@
 <div class="container-fluid">
+
   <span>{{memberTitle}}</span>
+  <!-- <button id="addMemberButton" class="btn btn-primary pull-right" (click)="goToAddMemberForm()">Add Member</button> -->
+  <table class="table">
+    <thead>
+      <tr>
+        <!-- <th>Member ID</th> -->
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Job Title</th>
+        <th>Racing Team</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let member of membersTest'>
+        <!-- <td>{{member?._id}}</td> -->
+        <td>{{member?.firstname}}</td>
+        <td>{{member.lastname}}</td>
+        <td>{{member?.jobtitle}}</td>
+        <td>{{member?.team}}</td>
+        <td>{{member?.status}}</td>
+        <td>
+          comming soon..
+          <!-- <button pButton icon="pi pi-pencil" (click)="goToEditMemberForm(member)"></button>
+          <button pButton icon="pi pi-trash" class="ui-button-raised ui-button-danger"
+            (click)="deleteMember(member)"></button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

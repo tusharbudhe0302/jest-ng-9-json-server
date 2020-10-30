@@ -1,8 +1,10 @@
 export interface Member {
-    id: number;
-    firstName: string;
-    lastName: string;
-    jobTitle: string;
+    _id: string;
+    firstname: string;
+    lastname: string;
+    jobtitle: string;
     team: string;
     status: string;
+    created: Date;
+    modified: Date;
 }
