@@ -1,10 +1,21 @@
 const Teams = require('./services/models/team.model');
 
 const getAllTeams = async () => {
-    return await Teams.find({});
+    try {
+        return await Teams.find({});
+    }
+    catch (ex) {
+        throw new Error({ status: 500, error: ex });
+    }
+
 }
 const getAllTeamById = async (id) => {
-    return await Teams.findById(id);
+    try {
+        return await Teams.findById(id);
+    }
+    catch (ex) {
+        throw new Error({ status: 500, error: ex });
+    }
 }
 module.exports.teamsController = {
     getAllTeams: getAllTeams,

@@ -9,7 +9,7 @@ const membersSync = async () => {
             lastname: `ln ${i}`,
             team: `team ${i}`,
             jobtitle:`job ${i}`,
-            status: `status ${i}`
+            status: `active`
         });
     }
 }

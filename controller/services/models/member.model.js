@@ -15,8 +15,7 @@ const memberSchema = new mongoose.mongoose.Schema ({
         required: true
     },
     jobtitle: {
-        type: String,
-        required: true
+        type: String
     },
     team: {
         type: String,
@@ -24,7 +23,8 @@ const memberSchema = new mongoose.mongoose.Schema ({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: ['active', 'inactive']
     }
 },
     {

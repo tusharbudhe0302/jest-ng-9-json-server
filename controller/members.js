@@ -2,8 +2,7 @@ const Members = require('./services/models/member.model');
 
 const getAllMembers = async () => {
     try {
-        const result = await Members.find({});;
-        return result
+        return await Members.find({});
     }
     catch (ex) {
         throw new Error({ status: 500, error: ex });
@@ -20,13 +19,14 @@ const getAllMembersById = async (id) => {
 }
 const createMember = async (member) => {
     try {
-        await Members.create({
+        const newMember = await Members.create({
             firstname: member.firstname,
             lastname: member.lastname,
             team: member.team,
-            status: member.status,
+            jobtitle:member.jobtitle,
+            status: member.status
         });
-        return response;
+        return newMember;
     }
     catch (ex) {
         throw new Error({ status: 500, error: ex });
