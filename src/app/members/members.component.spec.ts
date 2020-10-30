@@ -10,8 +10,7 @@ describe('MembersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MembersComponent],
       providers: [
-        { provide: MembersService, useValue:true },
-        { provide: ComponentFixtureAutoDetect, useValue: true }
+        { provide: MembersService, useValue: true },
       ],
     }).compileComponents();
   }));

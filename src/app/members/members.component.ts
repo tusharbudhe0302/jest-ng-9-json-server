@@ -19,7 +19,12 @@ export class MembersComponent implements OnInit {
   constructor(private membersService: MembersService) {
   }
   ngOnInit() {
+    /** Get converted data in Observer format from service layer.
     this.membersService.findAllMembers().subscribe((membersTest: Member[]) => {
+      this.membersTest = membersTest;
+    });
+     */
+    this.membersService.findAllMembersII().subscribe((membersTest) => {
       this.membersTest = membersTest;
     });
   }
