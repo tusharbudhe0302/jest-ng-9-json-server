@@ -1,16 +1,39 @@
-const fs = require('fs');
-const path = require('path');
+const Members = require('./services/models/member.model');
 
-let db ;
-const getAllMembers = () => {
-    db = JSON.parse(fs.readFileSync('db.json'));;
-    return db.members;
+const getAllMembers = async () => {
+    try {
+        const result = await Members.find({});;
+        return result
+    }
+    catch (ex) {
+        throw new Error({ status: 500, error: ex });
+    }
+
 }
-const getAllMembersById = (id) => {
-    db = JSON.parse(fs.readFileSync('db.json'));
-    return db.members[id - 1];
+const getAllMembersById = async (id) => {
+    try {
+        return await Members.findById(id);
+    }
+    catch (ex) {
+        throw new Error({ status: 500, error: ex });
+    }
+}
+const createMember = async (member) => {
+    try {
+        await Members.create({
+            firstname: member.firstname,
+            lastname: member.lastname,
+            team: member.team,
+            status: member.status,
+        });
+        return response;
+    }
+    catch (ex) {
+        throw new Error({ status: 500, error: ex });
+    }
 }
 module.exports.membersController = {
     getAllMembers: getAllMembers,
-    getAllMembersById: getAllMembersById
+    getAllMembersById: getAllMembersById,
+    createMember: createMember
 }

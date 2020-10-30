@@ -1,13 +1,10 @@
-const fs = require('fs');
-// const db = JSON.parse(fs.readFileSync('db.json'));
-let db;
-const getAllTeams = () => {
-    db = JSON.parse(fs.readFileSync('db.json'));
-    return db.teams;
+const Teams = require('./services/models/team.model');
+
+const getAllTeams = async () => {
+    return await Teams.find({});
 }
-const getAllTeamById = (id) => {
-    db = JSON.parse(fs.readFileSync('db.json'));
-    return db.teams[id - 1];
+const getAllTeamById = async (id) => {
+    return await Teams.findById(id);
 }
 module.exports.teamsController = {
     getAllTeams: getAllTeams,
