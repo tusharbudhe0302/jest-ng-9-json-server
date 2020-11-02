@@ -1,34 +1,40 @@
 <div class="container-fluid">
-
-  <span>{{memberTitle}}</span>
-  <!-- <button id="addMemberButton" class="btn btn-primary pull-right" (click)="goToAddMemberForm()">Add Member</button> -->
-  <table class="table">
-    <thead>
-      <tr>
-        <!-- <th>Member ID</th> -->
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Job Title</th>
-        <th>Racing Team</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor='let member of membersTest'>
-        <!-- <td>{{member?._id}}</td> -->
-        <td>{{member?.firstname}}</td>
-        <td>{{member?.lastname}}</td>
-        <td>{{member?.jobtitle}}</td>
-        <td>{{member?.team}}</td>
-        <td>{{member?.status}}</td>
-        <td>
-          comming soon..
-          <!-- <button pButton icon="pi pi-pencil" (click)="goToEditMemberForm(member)"></button>
-          <button pButton icon="pi pi-trash" class="ui-button-raised ui-button-danger"
-            (click)="deleteMember(member)"></button> -->
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <h6>{{memberTitle}}</h6>
+  <div class="container">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Job Title</th>
+          <th>Racing Team</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let member of members'>
+          <td>{{member?.firstname}}</td>
+          <td>{{member?.lastname}}</td>
+          <td>{{member?.jobtitle}}</td>
+          <td>{{member?.team}}</td>
+          <td>{{member?.status}}</td>
+          <td>
+            <div class="btn-group mr-2">
+              <button pButton icon="pi pi-pencil" label="Edit" class="p-button-info p-d-flex"
+                (click)="editMember(member)"></button>
+            </div>
+            <div class="btn-group mr-2">
+              <button pButton icon="pi pi-trash" label="Delete" class="p-button-danger p-d-flex"
+                (click)="deleteMember(member)"></button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="btn-group mr-2">
+      <button pButton icon="pi pi-plus" iconPos="left" label="Add" class="p-button-success p-d-flex"
+        (click)="addMember()"></button>
+    </div>
+  </div>
 </div>

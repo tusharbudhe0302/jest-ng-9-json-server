@@ -12,21 +12,28 @@ import { MembersService } from '../shared/services/members.service';
 })
 export class MembersComponent implements OnInit {
   memberTitle = "Member List";
-  members$: Observable<Member[]>;
-  member: Member;
-  allMembers: any;
-  membersTest: Member[] = [];
+  members: Member[] = [];
   constructor(private membersService: MembersService) {
   }
   ngOnInit() {
     /** Get converted data in Observer format from service layer.
-    this.membersService.findAllMembers().subscribe((membersTest: Member[]) => {
-      this.membersTest = membersTest;
+    this.membersService.findAllMembers().subscribe((members: Member[]) => {
+      this.members = members;
     });
      */
-    this.membersService.findAllMembersII().subscribe((membersTest) => {
-      this.membersTest = membersTest;
+    this.membersService.findAllMembersII().subscribe((members) => {
+      this.members = members;
     });
   }
+  editMember(member:Member){  
+    console.log(`Edit memeber : ${member._id}`);
+  }
+  deleteMember(member:Member){
+    console.log(`Delete member: ${member._id}`);
+  }
+  addMember(){
+    console.log(`Add memeber`);
+  }
+  
 
 }

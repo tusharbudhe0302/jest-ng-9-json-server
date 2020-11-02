@@ -10,8 +10,10 @@ import { routes } from './app.router'
 import { AppService } from './app.service';
 import { MembersService } from './shared/services/members.service';
 import { MembersComponent } from './members/members.component';
-
-
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Notice how both FormsModule and ReactiveFormsModule imported...choices, choices!
 @NgModule({
   declarations: [
@@ -22,8 +24,13 @@ import { MembersComponent } from './members/members.component';
   imports: [
     CommonModule,
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     RouterModule.forRoot(routes, { useHash: true, enableTracing: false, onSameUrlNavigation: 'reload' }),
+    DialogModule,
+    ButtonModule
   ],
   exports: [],
   providers: [AppService, MembersService],
