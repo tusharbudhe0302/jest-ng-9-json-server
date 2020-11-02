@@ -1,28 +1,28 @@
-import { async, TestBed, ComponentFixtureAutoDetect, inject } from '@angular/core/testing';
+import { async, TestBed, ComponentFixtureAutoDetect, inject, ComponentFixture } from '@angular/core/testing';
 import { MembersComponent } from './members.component';
-import { MembersService } from '../shared/services/members.service';
+import { RacingModule } from '../shared/racing.module';
+import { Component } from '@angular/core';
 
-class MockMembersService {
-  getMember = []
-}
 describe('MembersComponent', () => {
+  let component: MembersComponent;
+  let fixture: ComponentFixture<MembersComponent>;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MembersComponent],
-      providers: [
-        { provide: MembersService, useValue: true },
-      ],
-    }).compileComponents();
+      imports: [RacingModule],
+    }).compileComponents().then(() => {
+      fixture = TestBed.createComponent(MembersComponent);
+      component = fixture.componentInstance;
+    });
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(MembersComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
+    console.log(component);
   });
-  it(`should have as title 'Member List'`, () => {
-    const fixture = TestBed.createComponent(MembersComponent);
-    const app = fixture.componentInstance;
-    expect(app.memberTitle).toEqual('Member List');
-  });
+  // it(`should have as title 'Member List'`, () => {
+  //   const fixture = TestBed.createComponent(MembersComponent);
+  //   const app = fixture.componentInstance;
+  //   expect(app.memberTitle).toEqual('Member List');
+  // });
 });

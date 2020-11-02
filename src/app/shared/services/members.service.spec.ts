@@ -1,12 +1,13 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, async, inject } from '@angular/core/testing';
-import { strict } from 'assert';
+import { fail, strict } from 'assert';
 import { Mock } from 'protractor/built/driverProviders';
 import { environment } from 'src/environments/environment';
 
 import { MembersService } from './members.service';
 import { Member } from '../model/member';
 import { MEMBERS } from './services.mock.data';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 describe('MembersService', () => {
@@ -53,6 +54,7 @@ describe('MembersService', () => {
       firstname: 'tushar',
       lastname: 'budhe',
       jobtitle: 'NodeJS',
+      team: 'test',
       status: 'active'
     }
     membersService.createMember(memMemberMock).subscribe((member) => {
@@ -63,17 +65,32 @@ describe('MembersService', () => {
     expect(req.request.body.jobtitle).toBe("NodeJS");
     req.flush(Object.values(memMemberMock));
   });
-  // it('should update member', () => {
-  //   const update5Mock : Partial<Member> = MEMBERS[5];
-  //   update5Mock.jobtitle = 'Update job 5';
-  //   membersService.editMember(id, update5Mock).subscribe((member) => {
-  //     expect(member).toHaveBeenCalledTimes(1);
-  //   });
-  //   const req = httpTestingController.expectOne(`${api}/api/members/${id}`);
-  //   expect(req.request.method).toBe("PUT");
-  //   expect(req.request.body.jobtitle).toBe(id);;
-  //   req.flush(Object.values(update5Mock));
-  // });
+  it('should update member', () => {
+    const updateMemberMock: Partial<Member> = { firstname: 'fn 5', lastname: 'ln 5', team: 'team 5', jobtitle: 'job 5', status: 'active' };
+    membersService.editMember(id, updateMemberMock).subscribe((member) => {
+      expect(member).toHaveBeenCalledTimes(1);
+      expect(member._id).toBe(id);
+    });
+    const req = httpTestingController.expectOne(`${api}/api/members/${id}`);
+    expect(req.request.method).toEqual("PUT");
+    expect(req.request.body.jobtitle).toEqual(updateMemberMock.jobtitle);
+    req.flush(updateMemberMock);
+  });
+  it('should error on create member', () => {
+    const memMemberMock: Partial<Member> = {
+      lastname: 'budhe',
+      jobtitle: 'NodeJS2',
+      team: 'test',
+      status: 'active'
+    }
+    membersService.createMember(memMemberMock).subscribe(() =>  fail("create member should failed"),(error:HttpErrorResponse)=>{
+      expect(error.status).toBe(400);
+    });
+    const req = httpTestingController.expectOne(`${api}/api/members`);
+    expect(req.request.method).toBe("POST");
+    req.flush("failed to create member",{status:400,statusText:"Bad Request firstname,lastname,team,status, id , jobtitle required"});
+  });
+
   afterEach(() => {
     httpTestingController.verify();
   })

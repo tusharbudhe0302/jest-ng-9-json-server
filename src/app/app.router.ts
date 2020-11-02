@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
-import { Routes } from "@angular/router";
+import { Component,NgModule  } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
 import { MembersComponent } from './members/members.component';
 import { MemberDetailsComponent } from './member-details/member-details.component';
 
-export const routes: Routes = [
+const routes: Routes = [
     {
         path: '',
         redirectTo: 'members',
@@ -23,3 +23,8 @@ export const routes: Routes = [
         component: MembersComponent
     }
 ];
+@NgModule({
+    imports: [RouterModule.forRoot(routes)],
+    exports: [RouterModule]
+  })
+  export class AppRoutingModule { }

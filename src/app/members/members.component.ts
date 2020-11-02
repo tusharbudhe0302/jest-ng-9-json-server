@@ -13,7 +13,7 @@ import { MembersService } from '../shared/services/members.service';
 export class MembersComponent implements OnInit {
   memberTitle = "Member List";
   members: Member[] = [];
-  constructor(private membersService: MembersService) {
+  constructor(private membersService: MembersService,private router: Router) {
   }
   ngOnInit() {
     /** Get converted data in Observer format from service layer.
@@ -26,14 +26,15 @@ export class MembersComponent implements OnInit {
     });
   }
   editMember(member:Member){  
-    console.log(`Edit memeber : ${member._id}`);
+    this.router.navigate(['/member'], { queryParams: { id: member._id } });
   }
   deleteMember(member:Member){
-    console.log(`Delete member: ${member._id}`);
+    this.membersService.deleteMember(member._id).subscribe((deleted) => {
+      this.membersService.findAllMembersII().subscribe((members) => (this.members = members));
+    })
   }
   addMember(){
     console.log(`Add memeber`);
-  }
-  
+  } 
 
 }

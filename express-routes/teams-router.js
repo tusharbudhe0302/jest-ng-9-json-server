@@ -13,7 +13,7 @@ module.exports.teamsRoute = (routes) => {
     });
     routes.get('/teams/:id', async (req, res, next) => {
         try {
-            if (!req.params.id)   throw new Error({ status: 400, error: ex });;
+            if (!req.params.id) throw { status: 400, error: 'missing id' };
             const team = await teamsController.getAllTeamById(req.params.id);
             if (!team) res.status(404).send();
             return res.status(200).send(team);

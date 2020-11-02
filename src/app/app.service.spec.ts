@@ -5,7 +5,10 @@ import { AppService } from './app.service';
 import { HttpClient } from '@angular/common/http';
 
 describe('AppService', () => {
+  let appService: AppService;
+  let httpTestingController: HttpTestingController;
   beforeEach(() => {
+
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -14,10 +17,10 @@ describe('AppService', () => {
         AppService,
       ],
     });
+    appService = TestBed.inject(AppService);
+    httpTestingController = TestBed.inject(HttpTestingController);
   });
-  it('should get users', async(inject([HttpTestingController, AppService],
-    (httpMock: HttpTestingController, apiService: AppService) => {
-      expect(apiService).toBeTruthy();
-    }
-  )));
+  it('should initiate service', () => {
+      expect(appService).toBeTruthy();
+    });
 });
